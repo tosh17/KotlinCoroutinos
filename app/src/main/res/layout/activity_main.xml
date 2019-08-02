@@ -20,7 +20,7 @@
             android:text="Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="161dp" android:id="@+id/btn1"
+            tools:layout_editor_absoluteX="161dp" android:id="@+id/btn_test1_start"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="17dp"/>
     <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
