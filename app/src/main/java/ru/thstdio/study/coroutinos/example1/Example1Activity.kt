@@ -47,8 +47,10 @@ class Example1Activity : AppCompatActivity(), CoroutineScope by MainScope() {
 
         }
         btn_example1_coroutine_hard_work_x_stream.setOnClickListener { hardworkToXCore() }
+        btn_example1_coroutine_hard_work_status.setOnClickListener { GlobalScope.launch { hardworkStatus() } }
         anim()
     }
+
 
     private fun initFinish() {
         editText_ex1_factorial.setText(finishHardWork.toString())
@@ -115,7 +117,7 @@ class Example1Activity : AppCompatActivity(), CoroutineScope by MainScope() {
         }
     }
 
-    suspend fun hardWorkCoroutinos(start: Int, finish: Int, core: Int=1): String {
+    suspend fun hardWorkCoroutinos(start: Int, finish: Int, core: Int = 1): String {
         val deferred = async(Dispatchers.IO) {
             hardWork(start, finish, core)
         }
@@ -148,6 +150,32 @@ class Example1Activity : AppCompatActivity(), CoroutineScope by MainScope() {
         }
     }
 
+    private suspend fun hardworkStatus() {
+        printStart()
+        val startTime = System.currentTimeMillis()
+        val start = startHardWork
+        val finish = finishHardWork
+        val factor = BigData()
+
+        val deferred = async(Dispatchers.IO) {
+            for (i in start..finish) {
+                factor.data = factor.multiply(i)
+                launch(Dispatchers.Main) {
+                    progressBar1.progress = (i*100) / finish
+                }
+            }
+        }
+        withContext(Dispatchers.Main) {
+            val data = deferred.await()
+
+        }
+        val str = generateResult(factor.data, startTime)
+        textView_hard_work_result.append(str.end())
+    }
+
+    private fun printStart() {
+        textView_hard_work_result.append("--> ")
+    }
 
     private fun generateResult(data: String): String = "${finishHardWork}!.lenght = ${data.countChar()}  "
     private fun generateResult(data: String, startTime: Long): String =
@@ -160,18 +188,12 @@ class Example1Activity : AppCompatActivity(), CoroutineScope by MainScope() {
         Toast.makeText(baseContext, msg, Toast.LENGTH_LONG).show()
     }
 
-    private fun printStart() {
-        textView_hard_work_result.append("--> ")
-    }
-
     private fun getNumCores(): Int {
         //Private Class to display only CPU devices in the directory listing
         class CpuFilter : FileFilter {
             override fun accept(pathname: File): Boolean {
                 //Check if filename is "cpu", followed by one or more digits
-                return if (Pattern.matches("cpu[0-9]+", pathname.getName())) {
-                    true
-                } else false
+                return Pattern.matches("cpu[0-9]+", pathname.getName())
             }
         }
 
