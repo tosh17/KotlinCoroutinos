@@ -20,9 +20,7 @@
             android:text="Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_editor_absoluteX="161dp" android:id="@+id/btn_test1_start"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="17dp"/>
     <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
@@ -36,9 +34,7 @@
             android:text="Поток 1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="32dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="16dp" app:layout_constraintEnd_toStartOf="@+id/progressBar1"
-            android:layout_marginEnd="24dp"/>
+            tools:layout_editor_absoluteX="16dp" android:id="@+id/textView" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="32dp"/>
 
 </android.support.constraint.ConstraintLayout>

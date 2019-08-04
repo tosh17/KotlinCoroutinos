@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">coroutinos</string>
+    <string name="app_name_screen_ex1">Ex1 Job Dispatcher</string>
 </resources>
