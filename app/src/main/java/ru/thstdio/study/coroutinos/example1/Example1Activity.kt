@@ -14,6 +14,10 @@ import kotlinx.android.synthetic.main.activity_example1.*
 import kotlinx.coroutines.*
 import ru.thstdio.study.coroutinos.R
 import ru.thstdio.study.coroutinos.hardwork.BigData
+import ru.thstdio.study.coroutinos.util.countChar
+import ru.thstdio.study.coroutinos.util.end
+import ru.thstdio.study.coroutinos.util.getDeltaFromCurrentTime
+import ru.thstdio.study.coroutinos.util.getNumCores
 import java.io.File
 import java.io.FileFilter
 import java.util.regex.Pattern
@@ -188,43 +192,7 @@ class Example1Activity : AppCompatActivity(), CoroutineScope by MainScope() {
         Toast.makeText(baseContext, msg, Toast.LENGTH_LONG).show()
     }
 
-    private fun getNumCores(): Int {
-        //Private Class to display only CPU devices in the directory listing
-        class CpuFilter : FileFilter {
-            override fun accept(pathname: File): Boolean {
-                //Check if filename is "cpu", followed by one or more digits
-                return Pattern.matches("cpu[0-9]+", pathname.getName())
-            }
-        }
-
-        try {
-            //Get directory containing CPU info
-            val dir = File("/sys/devices/system/cpu/")
-            //Filter to only list the devices we care about
-            val files = dir.listFiles(CpuFilter())
-            //Return the number of cores (virtual CPU devices)
-            return files.size
-        } catch (e: Exception) {
-            //Default to return 1 core
-            return 1
-        }
-
-    }
-}
-
-private fun Long.getDeltaFromCurrentTime(): String {
-    val currentTime = (System.currentTimeMillis() - this) / 1000
-    val minute = currentTime / 60
-    val secunde = currentTime % 60
-
-    return java.lang.String.format("%02d:%02d", minute, secunde)
 
 }
 
-private fun String.countChar(): String {
-    return this.length.toString()
-}
 
-private fun String.end(): String {
-    return this + "\n"
-}
