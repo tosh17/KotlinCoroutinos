@@ -6,6 +6,7 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.runBlocking
 import ru.thstdio.study.coroutinos.example1.Example1Activity
+import ru.thstdio.study.coroutinos.example2.Example2
 import ru.thstdio.study.coroutinos.hardwork.BigData
 
 
@@ -15,34 +16,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         startExample(1)
         setContentView(R.layout.activity_main)
-        btn_test1_start.setOnClickListener{
-            text_out_stream.text=""
-            val factor = BigData()
-            val j: Int
-            j = 700
-            for (i in 1..j) {
-                factor.data = factor.multiply(i)
-                text_out_stream.text="Current position ${100*i/j}%"
-            }
-            text_out_stream.text="Факториал  $j!=+${factor.data.length}"
-        }
+
     }
 
     private fun startExample(number: Int) {
-        val next= Intent(this,
-           when(number){
-               else -> Example1Activity::class.java
-           } )
+        val next = Intent(
+            this,
+            when (number) {
+                1 -> Example1Activity::class.java
+                2 -> Example2::class.java
+                else -> Example1Activity::class.java
+            }
+        )
         startActivity(next)
         finish()
 
     }
 
-    fun showProgress(stream:Int,progress:Float)=runBlocking<Unit> {
-
-        when(stream){
-            1-> progressBar1.setProgress(progress.toInt())
-        }
-
-    }
 }
