@@ -2,4 +2,8 @@
     <string name="app_name">coroutinos</string>
     <string name="app_name_screen_ex1">Ex1 Job Dispatcher</string>
     <string name="app_name_screen_ex2_1">Channel — Actor</string>
+    <string name="title_activity_ex3">ActivityEx3</string>
+
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_ex3_1">Actor</string>
 </resources>

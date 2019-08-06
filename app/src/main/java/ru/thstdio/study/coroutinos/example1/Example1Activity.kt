@@ -18,9 +18,7 @@ import ru.thstdio.study.coroutinos.util.countChar
 import ru.thstdio.study.coroutinos.util.end
 import ru.thstdio.study.coroutinos.util.getDeltaFromCurrentTime
 import ru.thstdio.study.coroutinos.util.getNumCores
-import java.io.File
-import java.io.FileFilter
-import java.util.regex.Pattern
+import kotlin.system.measureTimeMillis
 
 
 class Example1Activity : AppCompatActivity(), CoroutineScope by MainScope() {
@@ -30,7 +28,7 @@ class Example1Activity : AppCompatActivity(), CoroutineScope by MainScope() {
     }
 
     val startHardWork = 1
-    var finishHardWork = 1500
+    var finishHardWork = 150
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_example1)
@@ -44,10 +42,15 @@ class Example1Activity : AppCompatActivity(), CoroutineScope by MainScope() {
         }
         btn_example1_coroutine_hard_work.setOnClickListener {
             GlobalScope.launch {
-                val startTime = System.currentTimeMillis()
-                val data = hardWorkCoroutinos(startHardWork, finishHardWork)
-                textView_hard_work_result.append(generateResult(data, startTime).end())
+                val time = measureTimeMillis {
+                    val startTime = System.currentTimeMillis()
+                    val data = hardWorkCoroutinos(startHardWork, finishHardWork)
+                    textView_hard_work_result.append(generateResult(data, startTime).end())
+
+                }
+                textView_hard_work_result.append("\n  measureTimeMillis for  = "+time.toString())
             }
+
 
         }
         btn_example1_coroutine_hard_work_x_stream.setOnClickListener { hardworkToXCore() }
@@ -112,12 +115,11 @@ class Example1Activity : AppCompatActivity(), CoroutineScope by MainScope() {
     }
 
     suspend fun hardWorkCoroutinos(start: Int, finish: Int): String {
-        val deferred = async(Dispatchers.IO) {
+        val deferred = async(Dispatchers.Default) {
             hardWork(start, finish)
         }
         return withContext(Dispatchers.Main) {
-            val data = deferred.await()
-            return@withContext data
+            return@withContext deferred.await()
         }
     }
 
@@ -126,8 +128,7 @@ class Example1Activity : AppCompatActivity(), CoroutineScope by MainScope() {
             hardWork(start, finish, core)
         }
         return withContext(Dispatchers.Main) {
-            val data = deferred.await()
-            return@withContext data
+            return@withContext deferred.await()
         }
     }
 
@@ -165,7 +166,7 @@ class Example1Activity : AppCompatActivity(), CoroutineScope by MainScope() {
             for (i in start..finish) {
                 factor.data = factor.multiply(i)
                 launch(Dispatchers.Main) {
-                    progressBar1.progress = (i*100) / finish
+                    progressBar1.progress = (i * 100) / finish
                 }
             }
         }

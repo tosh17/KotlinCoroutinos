@@ -7,6 +7,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.runBlocking
 import ru.thstdio.study.coroutinos.example1.Example1Activity
 import ru.thstdio.study.coroutinos.example2.Example2
+import ru.thstdio.study.coroutinos.example3.ActivityEx3
+import ru.thstdio.study.coroutinos.example3.Example3
 import ru.thstdio.study.coroutinos.hardwork.BigData
 
 
@@ -14,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        startExample(1)
+        startExample(3)
         setContentView(R.layout.activity_main)
 
     }
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             when (number) {
                 1 -> Example1Activity::class.java
                 2 -> Example2::class.java
+                3 -> ActivityEx3::class.java
                 else -> Example1Activity::class.java
             }
         )
